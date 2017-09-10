@@ -1,0 +1,13 @@
+﻿<div ng-controller="AddTranslation.CreateNewTranslation">
+    <div class="umb-dialog-body">
+        <div class="umb-pane">
+            <label class="control-label">Language code: </label>
+            <input class="umb-control" type="text" ng-model="languageCode" required />
+        </div>
+    </div>
+
+    <div class="umb-dialog-footer btn-toolbar umb-btn-toolbar">
+        <a class="btn btn-link" ng-click="cancel()">Cancel</a>
+        <button class="btn btn-primary" ng-click="create()">Add</button>
+    </div>
+</div>

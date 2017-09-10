@@ -1,0 +1,25 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using Umbraco.RelationEditor.Extensions
+@{
+    var translations = Model.Content.Related<IPublishedContent>("translation").Where(x => x.IsVisible()).ToList();
+
+    if(translations.Count() == 1  && translations.First().Url.Contains("cs")){
+        var relatedTranslations = translations.First().Related<IPublishedContent>("translation").Where(x => x.IsVisible()).ToList();
+        translations = translations.Concat(relatedTranslations).ToList();
+    }
+    else {
+        translations.Add(Model.Content);
+    }
+    
+    var languageVersions =  Model.Content.Site().Children().Where(x => x.IsVisible()).ToList();
+}
+
+<ul class="lang-sel">
+    @foreach(var language in languageVersions){
+        foreach(var item in translations) {
+            if(item.Url.Contains(language.Url)){
+                <li class="lang-sel__item @(Model.Content.Url.Contains(language.Url)?"lang-sel__item--active":null )"> <a href="@item.Url">@language.Name</a></li>
+            }
+        }
+    }
+</ul>
